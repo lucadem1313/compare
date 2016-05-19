@@ -1,0 +1,299 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+$fontfamily: 'Open Sans', sans-serif;
+
+@import "compass/css3";
+
+//The Mixin
+//==========
+
+@mixin long-shadow($type, $color, $length, $fadeout: true, $skew: false, $direction: right){
+  $shadow: '';
+  @if $skew == false or $type == text{
+    @if $direction == right {
+      @for $i from 0 to $length - 1 {
+        $shadow: $shadow + $i + 'px ' + $i + 'px 0 ' + $color + ',';
+      }
+    }
+    @if $direction == left {
+      @for $i from 0 to $length - 1 {
+        $shadow: $shadow + $i * -1 + 'px ' + $i + 'px 0 ' + $color + ',';
+       }
+      }
+     }
+        
+   @if $fadeout == true{
+    @for $i from 1 to $length - 1 {
+      @if $type == text or $skew == false{
+        @if $direction == right{
+          $shadow: $shadow + $i + 'px ' + $i + 'px 0 ' +       rgba($color, 1 - $i / $length) + ',';
+        }
+        @if $direction == left{
+          $shadow: $shadow + $i * -1 + 'px ' + $i + 'px 0 ' +       rgba($color, 1 - $i / $length) + ',';
+        }
+      }
+      @if ($type == box) and $skew == true{
+        @if $direction == right {
+          $shadow: $shadow + $i + 'px ' + $i + 'px 0 ' + $i * .2 + 'px ' + rgba($color, 1 - $i / $length) + ',';
+        }
+        @if $direction == left {
+          $shadow: $shadow + $i * -1 + 'px ' + $i + 'px 0 ' + $i * .2 + 'px ' + rgba($color, 1 - $i / $length) + ',';
+        }
+      }
+  }
+  $shadow: $shadow + $length + 'px ' + $length + 'px 0 ' + rgba($color, 0);
+ }
+ @if $fadeout == false{
+   @if $skew == true and ( $type == box ){
+     @for $i from 0 to $length - 1 {
+            $shadow: $shadow + $i + 'px ' + $i + 'px 0 ' + $i * .1 + 'px ' + $color + ',';
+      }
+   }
+    $shadow: $shadow + $length + 'px ' + $length + 'px 0 ' + rgba(0,0,0,0);
+ }
+ $shadow: unquote($shadow);
+  @if $type == 'box' {box-shadow: $shadow;}
+  @if $type == 'text' {text-shadow: $shadow;}
+}
+body, html{
+  margin:0;
+  padding:0;
+}
+body{
+  text-align:center;
+  font:30px $fontfamily;
+  padding-bottom:100px;
+}
+h1{
+  font-weight:normal;
+}
+.material-icons{
+  font-size:50px;
+}
+.product{
+  height:200px;
+  width:200px;
+  padding:40px;
+  border-radius:300px;
+  border:5px #000 solid;
+  overflow:hidden;
+  
+  -webkit-box-shadow: 1px 0px 58px -16px rgba(0,0,0,0.75);
+  -moz-box-shadow: 1px 0px 58px -16px rgba(0,0,0,0.75);
+  box-shadow: 1px 0px 58px -16px rgba(0,0,0,0.75);
+  
+  cursor:pointer;
+  display:inline-block;
+  transform-origin:50% 50%;
+  transition:all 0.4s;
+  background:#FFF;
+  
+}
+#product2{
+  margin-left:80px;
+}
+.product img{
+  height:100%;
+  top:0;
+  transition-delay:0.1s;
+  display:block;
+  position:relative;
+  transition:all 0.3s;
+}
+/* .product:hover img{
+  height:140%;
+  margin-top:-20%;
+  margin-left:-20%;
+} */
+
+.product.chosen{
+  border:5px #64DD17 solid;
+  -webkit-box-shadow: 1px 0px 58px -16px #64DD17;
+  -moz-box-shadow: 1px 0px 58px -16px #64DD17;
+  box-shadow: 1px 0px 58px -16px #64DD17;
+
+
+}
+.product.chosen img{
+  height:140%;
+  margin-top:-20%;
+  margin-left:-20%;
+}
+.product h1{
+  font:40px $fontfamily;
+  position:absolute;
+  margin-top:-264px;
+  margin-left:-41px;
+  height:202px;
+  width:202px;
+  padding:40px;
+  border-radius:300px;
+  opacity:0;
+  vertical-align:middle;
+  color:#FFF;
+  text-align:center;
+  transition:opacity 0.3s;
+  background:rgba(0,0,0,0.6);
+}
+.product:hover h1{
+  opacity:1;
+}
+.overlay{
+  width:280px;
+  height:280px;
+  position:absolute;
+  margin-top:-240px;
+  margin-left:-40px;
+  border-radius:300px;
+  background:#000;
+  opacity:0;
+  transition:opacity 0.3s;
+}
+.product:hover .overlay{
+  opacity:0.8;
+}
+button{
+  background:transparent;
+  font:30px $fontfamily;
+  padding:20px;
+  border-radius:3px;
+  border:3px #000 solid;
+  cursor:pointer;
+}
+// .button{
+//   display: inline-block;
+//   background: transparent;
+//   border: 3px #000 solid;
+//   padding-top: 2px;
+//   padding-bottom: 2px;
+//   padding-left: 7px;
+//   padding-right: 7px;
+//   font-size: 20px;
+//   font-family: "Open Sans", sans-serif;
+//   cursor: pointer;
+//   position: relative;
+//   transition: top 0.3s;
+//   width:100px;
+//   height:50px;
+//   overflow:hidden;
+//   transition: color 0.2s;
+//   transition-delay: 0.05s;
+// }
+// .button div{
+//   background:#000;
+//   height:50px;
+//   width:100px;
+//   position: absolute;
+//   margin-top: 100px;
+//   margin-left:-10px;
+//   transition: all 0.2s;
+// }
+// .button span{
+//   position: relative;
+//   z-index:9999;
+// }
+// .button:hover div{
+//   margin-top: -40px;
+// }
+// .button:hover{
+//   color:#FFF;
+// }
+// .button:active{
+//   border-bottom-width: 3px;
+//   top: 3px;
+//   outline: none;
+// }
+// .button:focus{outline:none;}
+form{
+  line-height:2em;
+  position:absolute;
+  top:1000px;
+  width:100%;
+  padding-bottom:100px;
+}
+form button{
+  font-size:28px;
+  padding:10px;
+}
+input[type='text']{
+  font:26px $fontfamily;
+  padding:7px;
+  border:2px #AFAFAF solid;
+  transition:border 0.2s;
+}
+input[type='text']:focus{
+  outline:none;
+  border:2px #000 solid;
+}
+#votecount1{
+  padding:10px;
+  font-size:20px;
+  background:#27C727;
+  color:#FFF;
+  border-radius:5px;
+  vertical-align:middle;
+  margin-left:20px;
+  display:inline-block;
+  cursor:pointer;
+}
+.label{
+  font-size:10px;
+}
+#votecount2{
+  padding:10px;
+  font-size:20px;
+  background:#FF0000;
+  color:#FFF;
+  border-radius:5px;
+  vertical-align:middle;
+  margin-left:20px;
+  cursor:pointer;
+}
+.material-icons{
+  vertical-align:middle;
+}
+#new{
+  position:absolute;
+  top:870px;
+  left:50%;
+  width:100px;
+  height:100px;
+  border-radius:50px;
+  margin-left:-50px;
+  margin-bottom:100px;
+  background:#5F5F5F;
+  border-color:transparent;
+}
+#new:focus{
+  outline:none;
+}
+#line1{
+  width:10px;
+  background:#FFF;
+  height:50px;
+  transform:rotate(-45deg);
+  margin-left:7px;
+  margin-top:5px;
+  transition:all 0.3s;
+  border-radius:5px;
+}
+#line2{
+  width:10px;
+  background:#FFF;
+  height:50px;
+  margin-top:-50px;
+  margin-left:37px;
+  transform:rotate(45deg);
+  transition:all 0.3s;
+  border-radius:5px;
+}
+#line1.active{
+  transform:rotate(45deg);
+  margin-top:0px;
+  margin-left:23px;
+}
+#line2.active{
+  transform:rotate(-45deg);
+  margin-left:23px;
+  margin-top:-50px;
+}
